@@ -691,6 +691,10 @@ class HTML(BaseParser):
                 cookies_render.append(convert)
         return cookies_render
 
+    def close_page(self):
+        if self.page:
+            self.session.loop.run_until_complete(self.page.close())
+
     def render(
         self,
         retries: int = 8,
