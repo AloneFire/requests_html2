@@ -37,14 +37,14 @@ useragent = None
 
 
 class FindQueryList(list):
-    def select(self, result_filter=None, first=True, default=None):
+    def select(self, result_filter=None, first=False, default=None):
         if first:
             if not self:
                 return default
             else:
                 return result_filter(self[0]) if result_filter else self[0]
         if result_filter:
-            return map(result_filter, self)
+            return FindQueryList(map(result_filter, self))
 
     def where(self, result_filter):
         return FindQueryList(filter(result_filter, self))
@@ -65,7 +65,7 @@ _LXML = HtmlElement
 _Text = str
 _Search = Result
 _Containing = Union[str, List[str]]
-_Links = Set[str]
+_Links = FindQueryList[str]
 _Attrs = MutableMapping
 _Next = Union["HTML", List[str]]
 _NextSymbol = List[str]
@@ -350,7 +350,7 @@ class BaseParser:
                 except KeyError:
                     pass
 
-        return set(gen())
+        return FindQueryList(set(gen()))
 
     def _make_absolute(self, link):
         """将给定链接转换为绝对链接。"""
@@ -383,7 +383,7 @@ class BaseParser:
             for link in self.links:
                 yield self._make_absolute(link)
 
-        return set(gen())
+        return FindQueryList(set(gen()))
 
     @property
     def base_url(self) -> _URL:
@@ -686,7 +686,9 @@ class HTML(BaseParser):
         cookies_render = []
         if isinstance(self.session.cookies, http.cookiejar.CookieJar):
             for cookie in self.session.cookies:
-                cookies_render.append(self._convert_cookiejar_to_render(cookie))
+                convert = self._convert_cookiejar_to_render(cookie)
+                convert["url"] = self.url
+                cookies_render.append(convert)
         return cookies_render
 
     def render(
