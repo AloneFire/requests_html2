@@ -1,0 +1,10 @@
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pdm-python
+temp/
+.venv/
+.vscode/
+pdm.lock
