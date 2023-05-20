@@ -19,6 +19,10 @@ requires-python = ">=3.7"
 readme = "README.md"
 license = {text = "MIT"}
 
+[project.urls]
+"Homepage" = "https://github.com/AloneFire/requests_html2"
+"Bug Tracker" = "https://github.com/AloneFire/requests_html2"
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
