@@ -1,7 +1,7 @@
 
 [project]
 name = "requests_html2"
-version = "1.0.3"
+version = "1.0.4"
 description = "HTML Parsing for Humans"
 authors = [
     {name = "Bevis", email = "alonefire@foxmail.com"},

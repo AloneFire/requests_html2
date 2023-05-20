@@ -791,6 +791,7 @@ class HTML(BaseParser):
             raise MaxRetries("Unable to render the page. Try increasing timeout")
 
         html = HTML(
+            session=self.session,
             url=self.url,
             html=content.encode(DEFAULT_ENCODING),
             default_encoding=DEFAULT_ENCODING,
@@ -848,6 +849,7 @@ class HTML(BaseParser):
             raise MaxRetries("Unable to render the page. Try increasing timeout")
 
         html = HTML(
+            session=self.session,
             url=self.url,
             html=content.encode(DEFAULT_ENCODING),
             default_encoding=DEFAULT_ENCODING,
