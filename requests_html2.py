@@ -895,6 +895,15 @@ def mock_user_agent(style=None) -> _UserAgent:
     生成 FakeUserAgent
     Returns an apparently legit user-agent, if not requested one of a specific
     style. Defaults to a Chrome-style User-Agent.
+    :param style:
+        -  random （默认）：随机返回用户代理字符串。
+        -  firefox ：返回自带版本信息的 Firefox 用户代理字符串。
+        -  safari ：返回自带版本信息的 Safari 用户代理字符串。
+        -  internetexplorer 或 ie ：返回自带版本信息的 Internet Explorer 用户代理字符串。
+        -  opera ：返回自带版本信息的 Opera 用户代理字符串。
+        -  chrome ：返回自带版本信息的 Chrome 用户代理字符串。
+        -  google ：返回自带版本信息的 Google（Chrome）用户代理字符串。
+        -  phantomjs ：返回自带版本信息的 PhantomJS 用户代理字符串。
     """
     global useragent
     if (not useragent) and style:
@@ -932,6 +941,14 @@ class BaseSession(requests.Session):
         """
         :param user_agent: 设置 User-Agent
         :param mock_browser_style: Mock User-Agent （set 'default' use DEFAULT_USER_AGENT）
+            -  random （默认）：随机返回用户代理字符串。
+            -  firefox ：返回自带版本信息的 Firefox 用户代理字符串。
+            -  safari ：返回自带版本信息的 Safari 用户代理字符串。
+            -  internetexplorer 或 ie ：返回自带版本信息的 Internet Explorer 用户代理字符串。
+            -  opera ：返回自带版本信息的 Opera 用户代理字符串。
+            -  chrome ：返回自带版本信息的 Chrome 用户代理字符串。
+            -  google ：返回自带版本信息的 Google（Chrome）用户代理字符串。
+            -  phantomjs ：返回自带版本信息的 PhantomJS 用户代理字符串。
         :param verify: 控制是否验证证书
         :param browser_args: 浏览器初始化参数
             -  headless ：设置是否为无头模式，默认为  True 。
@@ -950,7 +967,7 @@ class BaseSession(requests.Session):
         # Mock a web browser's user agent.
 
         if mock_browser_style:
-            self.headers["User-Agent"] = user_agent(mock_browser_style)
+            self.headers["User-Agent"] = mock_user_agent(mock_browser_style)
 
         if user_agent:
             self.headers["User-Agent"] = user_agent
