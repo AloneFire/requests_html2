@@ -589,10 +589,6 @@ class HTML(BaseParser):
         try:
             # pyppeteer 创建新标签页
             page = await self.browser.newPage()
-
-            # 页面加载前等待
-            await asyncio.sleep(wait)
-
             if cookies:
                 for cookie in cookies:
                     if cookie:
@@ -606,7 +602,10 @@ class HTML(BaseParser):
                     f"data:text/html,{self.html}",
                     options={"timeout": int(timeout * 1000)},
                 )
-
+            
+            # 页面加载等待
+            await asyncio.sleep(wait)
+            
             result = None
             if script:
                 result = await page.evaluate(script)
@@ -711,7 +710,7 @@ class HTML(BaseParser):
         """重新加载，带有JavaScript执行的版本的响应。
         :param retries: 在Chromium中重试加载页面的次数。
         :param script: 页面加载时要执行的JavaScript（可选）。
-        :param wait: 在加载页面前等待的秒数（可选）。
+        :param wait: 在加载页面等待的秒数（可选）。
         :param scrolldown: 如果提供，整数，表示要向下滚动的次数。.
         :param sleep: 滚动一次停顿或者加载完成后等待的时长，等待页面Ajax请求加载完成，整数秒数
         :param reload: 如果`False`  ，则不会从浏览器加载内容，而是将从内存提供内容。
