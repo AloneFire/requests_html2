@@ -8,3 +8,4 @@ temp/
 .venv/
 .vscode/
 pdm.lock
+.pdm--build/
