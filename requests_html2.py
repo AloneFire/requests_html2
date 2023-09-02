@@ -339,6 +339,14 @@ class HTMLSession(Client):
             self._playwright = None
         return super().__exit__(exc_type, exc_value, traceback)
 
+    def close(self) -> None:
+        if self._browser:
+            self._browser.close()
+            self._playwright.stop()
+            self._browser = None
+            self._playwright = None
+        return super().close()
+
     def request(self, *args, **kwargs) -> HTMLResponse:
         response = super().request(*args, **kwargs)
         return HTMLResponse.from_httpx_response(session=self, response=response)
@@ -402,6 +410,14 @@ class AsyncHTMLSession(AsyncClient):
             self._browser = None
             self._playwright = None
         return await super().__aexit__(exc_type, exc_value, traceback)
+
+    async def aclose(self) -> None:
+        if self._browser:
+            await self._browser.close()
+            await self._playwright.stop()
+            self._browser = None
+            self._playwright = None
+        return await super().aclose()
 
     async def request(self, *args, **kwargs) -> HTMLResponse:
         response = await super().request(*args, **kwargs)
