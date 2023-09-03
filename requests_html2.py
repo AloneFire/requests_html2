@@ -221,9 +221,10 @@ class HTMLCookies(Cookies):
                         "value": cookie.value,
                         "domain": cookie.domain,
                         "path": cookie.path,
-                        "expires": cookie.expires,
                         "secure": cookie.secure,
                     }
+                    if cookie.expires is not None:
+                        cookie_dict["expires"] = cookie.expires
                     if cookie._rest.get("HttpOnly"):
                         cookie_dict["httpOnly"] = cookie._rest["HttpOnly"]
                     elif cookie._rest.get("SameSite"):
