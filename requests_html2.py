@@ -329,9 +329,9 @@ class HTMLSession(Client):
 
     def __exit__(
         self,
-        exc_type: type[BaseException] | None = None,
-        exc_value: BaseException | None = None,
-        traceback: TracebackType | None = None,
+        exc_type: Optional[type[BaseException]] = None,
+        exc_value: Optional[BaseException] = None,
+        traceback: Optional[TracebackType] = None,
     ) -> None:
         if self._browser:
             self._browser.close()
@@ -401,9 +401,9 @@ class AsyncHTMLSession(AsyncClient):
 
     async def __aexit__(
         self,
-        exc_type: type[BaseException] | None = None,
-        exc_value: BaseException | None = None,
-        traceback: TracebackType | None = None,
+        exc_type: Optional[type[BaseException]] = None,
+        exc_value: Optional[BaseException] = None,
+        traceback: Optional[TracebackType] = None,
     ) -> None:
         if self._browser:
             await self._browser.close()
